@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  portofolio-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portofolio_bagas_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/dev.db
+      - JWT_SECRET=kunci-rahasia-autentikasi-portfolio-super-aman-2026
+    volumes:
+      - ./data:/app/data
+      - ./public/projects:/app/public/projects
+    networks:
+      - portofolio-net
+
+networks:
+  portofolio-net:
+    driver: bridge

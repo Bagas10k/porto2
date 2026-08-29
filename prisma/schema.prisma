@@ -1,0 +1,84 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Pengguna {
+  id              String   @id @default(cuid())
+  nama_pengguna   String   @unique
+  email           String   @unique
+  kata_sandi      String
+  nama_lengkap    String
+  dibuat_pada     DateTime @default(now())
+  diperbarui_pada DateTime @updatedAt
+}
+
+model Biodata {
+  id                  String   @id @default(cuid())
+  nama_lengkap        String
+  gelar_profesi       String
+  deskripsi_singkat   String
+  status_ketersediaan String   @default("Tersedia untuk Pekerjaan / Proyek")
+  url_foto_profil     String?
+  url_cv              String?
+  email_kontak        String
+  nomor_telepon       String?
+  lokasi              String?
+  tautan_github       String?
+  tautan_linkedin     String?
+  tautan_twitter      String?
+  tautan_instagram    String?
+  dibuat_pada         DateTime @default(now())
+  diperbarui_pada     DateTime @updatedAt
+}
+
+model Keahlian {
+  id            String   @id @default(cuid())
+  nama_keahlian String
+  kategori      String   @default("Utama")
+  urutan        Int      @default(0)
+  dibuat_pada   DateTime @default(now())
+}
+
+model Proyek {
+  id              String   @id @default(cuid())
+  judul           String
+  slug            String   @unique
+  deskripsi       String
+  tipe_media      String   @default("WEB_DEPLOYMENT") // WEB_DEPLOYMENT, VIDEO_DRIVE, GALERI_FOTO, TAUTAN_EKSTERNAL
+  kategori        String   @default("Web Development") // Web Development, Video & Multimedia, Graphic Design
+  gambar_sampul   String?
+  tautan_tujuan   String?
+  path_statis     String?
+  daftar_tag      String   @default("[]")
+  daftar_gambar   String?  @default("[]")
+  status          String   @default("AKTIF") // AKTIF, DRAFT, DIARSIPKAN
+  jumlah_dilihat  Int      @default(0)
+  unggulan        Boolean  @default(false)
+  urutan          Int      @default(0)
+  dibuat_pada     DateTime @default(now())
+  diperbarui_pada DateTime @updatedAt
+}
+
+model StatistikInteraksi {
+  id              String   @id @default(cuid())
+  id_proyek       String?
+  jenis_interaksi String   @default("LIHAT_PROYEK")
+  ip_pengguna     String?
+  user_agent      String?
+  dibuat_pada     DateTime @default(now())
+}
+
+model PesanMasuk {
+  id              String   @id @default(cuid())
+  nama_pengirim   String
+  email_pengirim  String
+  subjek          String?
+  isi_pesan       String
+  sudah_dibaca    Boolean  @default(false)
+  dibuat_pada     DateTime @default(now())
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Interaktif & Konverter Satuan</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --btn-bg: #334155;
+      --btn-hover: #475569;
+      --border: #334155;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .wadah-kalkulator {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .header-demo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .badge-status {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .layar-tampilan {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: right;
+      font-size: 28px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 16px;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      word-break: break-all;
+      color: #38bdf8;
+    }
+    .grid-tombol {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      background: var(--btn-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    button:hover {
+      background: var(--btn-hover);
+      transform: translateY(-1px);
+    }
+    button:active {
+      transform: translateY(1px);
+    }
+    button.operator {
+      background: #1e3a8a;
+      color: #93c5fd;
+    }
+    button.operator:hover {
+      background: var(--accent-hover);
+      color: #ffffff;
+    }
+    button.hitung {
+      background: var(--accent);
+      color: #ffffff;
+      grid-column: span 2;
+    }
+    button.hitung:hover {
+      background: var(--accent-hover);
+    }
+    button.hapus {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
+    button.hapus:hover {
+      background: #991b1b;
+      color: #ffffff;
+    }
+    .footer-keterangan {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wadah-kalkulator">
+    <div class="header-demo">
+      <span class="badge-status">Live Static Micro-Deployment</span>
+      <h3 style="font-size: 16px; font-weight: 600;">Kalkulator Interaktif</h3>
+    </div>
+    <div class="layar-tampilan" id="layar-angka">0</div>
+    <div class="grid-tombol">
+      <button class="hapus" onclick="bersihkanLayar()">C</button>
+      <button onclick="tambahKarakter('/')" class="operator">/</button>
+      <button onclick="tambahKarakter('*')" class="operator">*</button>
+      <button onclick="hapusSatu()">DEL</button>
+
+      <button onclick="tambahKarakter('7')">7</button>
+      <button onclick="tambahKarakter('8')">8</button>
+      <button onclick="tambahKarakter('9')">9</button>
+      <button onclick="tambahKarakter('-')" class="operator">-</button>
+
+      <button onclick="tambahKarakter('4')">4</button>
+      <button onclick="tambahKarakter('5')">5</button>
+      <button onclick="tambahKarakter('6')">6</button>
+      <button onclick="tambahKarakter('+')" class="operator">+</button>
+
+      <button onclick="tambahKarakter('1')">1</button>
+      <button onclick="tambahKarakter('2')">2</button>
+      <button onclick="tambahKarakter('3')">3</button>
+      <button onclick="tambahKarakter('.')">.</button>
+
+      <button onclick="tambahKarakter('0')">0</button>
+      <button class="hitung" onclick="kalkulasiHasil()">=</button>
+    </div>
+    <div class="footer-keterangan">Dijalankan langsung melalui Subpath Engine /projects/</div>
+  </div>
+
+  <script>
+    const elemenLayar = document.getElementById('layar-angka');
+    let ekspresi = '';
+
+    function tambahKarakter(karakter) {
+      if (ekspresi === '0' && karakter !== '.') {
+        ekspresi = karakter;
+      } else {
+        ekspresi += karakter;
+      }
+      elemenLayar.innerText = ekspresi;
+    }
+
+    function bersihkanLayar() {
+      ekspresi = '';
+      elemenLayar.innerText = '0';
+    }
+
+    function hapusSatu() {
+      ekspresi = ekspresi.slice(0, -1);
+      elemenLayar.innerText = ekspresi || '0';
+    }
+
+    function kalkulasiHasil() {
+      try {
+        if (!ekspresi) return;
+        // Sanitasi hanya angka dan operator matematika
+        const ekspresiAman = ekspresi.replace(/[^0-9+\-*/.]/g, '');
+        const hasil = Function('"use strict";return (' + ekspresiAman + ')')();
+        ekspresi = String(hasil);
+        elemenLayar.innerText = ekspresi;
+      } catch (galat) {
+        elemenLayar.innerText = 'Error';
+        ekspresi = '';
+      }
+    }
+  </script>
+</body>
+</html>

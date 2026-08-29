@@ -1,69 +1,94 @@
-import Image from "next/image";
+import { koneksiBasisData } from "@/lib/basis-data";
+import { inisialisasiDataAwal } from "@/lib/data-awal";
+import { NavbarPillMelayang } from "@/components/antarmuka-publik/NavbarPillMelayang";
+import { PelacakBagianSamping } from "@/components/antarmuka-publik/PelacakBagianSamping";
+import { HeroOrbitTeknologi } from "@/components/antarmuka-publik/HeroOrbitTeknologi";
+import { MarqueeIntegrasiAlat } from "@/components/antarmuka-publik/MarqueeIntegrasiAlat";
+import { BagianFilosofiKarya } from "@/components/antarmuka-publik/BagianFilosofiKarya";
+import { GridProyek } from "@/components/antarmuka-publik/GridProyek";
+import { VisualizerAlurDeploy } from "@/components/antarmuka-publik/VisualizerAlurDeploy";
+import { BagianKeahlian } from "@/components/antarmuka-publik/BagianKeahlian";
+import { FooterPublik } from "@/components/antarmuka-publik/FooterPublik";
+import { LatarBelakangInteraktif } from "@/components/antarmuka-publik/LatarBelakangInteraktif";
+import { KursorMagnetikInteraktif } from "@/components/antarmuka-publik/KursorMagnetikInteraktif";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function HalamanBeranda() {
+  await inisialisasiDataAwal();
+
+  const biodata = await koneksiBasisData.biodata.findFirst({
+    orderBy: { dibuat_pada: "desc" },
+  });
+
+  const daftarKeahlian = await koneksiBasisData.keahlian.findMany({
+    orderBy: [{ urutan: "asc" }, { dibuat_pada: "asc" }],
+  });
+
+  const daftarProyek = await koneksiBasisData.proyek.findMany({
+    where: { status: "AKTIF" },
+    orderBy: [{ unggulan: "desc" }, { urutan: "asc" }, { dibuat_pada: "desc" }],
+  });
+
+  const dataBiodata = biodata || {
+    nama_lengkap: "Bagas Pratama",
+    gelar_profesi: "Senior Fullstack Engineer & Creative Technologist",
+    deskripsi_singkat:
+      "Membangun arsitektur perangkat lunak modern, aplikasi web interaktif performa tinggi, dan platform digital berbasis micro-deployment yang scalable.",
+    status_ketersediaan: "Tersedia untuk Kontrak & Proyek Penuh",
+    url_foto_profil: null,
+    url_cv: "/cv-bagas-pratama.pdf",
+    email_kontak: "bagas.pratama.dev@gmail.com",
+    nomor_telepon: "+62 812-3456-7890",
+    lokasi: "Jakarta, Indonesia",
+    tautan_github: "https://github.com",
+    tautan_linkedin: "https://linkedin.com",
+    tautan_twitter: "https://twitter.com",
+    tautan_instagram: "https://instagram.com",
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
+      {/* Kursor Magnetik Halus Berbasis Fisika Pegas */}
+      <KursorMagnetikInteraktif />
+
+      {/* Kanvas Partikel & Sinar Gradien Interaktif 60 FPS */}
+      <LatarBelakangInteraktif />
+
+      {/* Floating Pill Navbar Ringkas (Ultra Compact) */}
+      <NavbarPillMelayang
+        namaLengkap={dataBiodata.nama_lengkap}
+        gelarProfesi={dataBiodata.gelar_profesi}
+      />
+
+      {/* Side Section Scroll Tracker (Sisi Kanan Layar) */}
+      <PelacakBagianSamping />
+
+      <main className="flex-1">
+        {/* BAB 01: The Hook — Cinematic Hero dengan Tipografi Kinetik & Telemetri HUD */}
+        <HeroOrbitTeknologi data={dataBiodata} />
+
+        {/* Brand & Ecosystem Marquee */}
+        <MarqueeIntegrasiAlat />
+
+        {/* Manfaat & Prinsip Solusi Nyata */}
+        <BagianFilosofiKarya />
+
+        {/* Bukti Karya Nyata — Galeri 3D Proyek & Filter Karya */}
+        <GridProyek daftarProyekAwal={daftarProyek} />
+
+        {/* Kemudahan Peluncuran Web — Micro-Deployment Engine */}
+        <VisualizerAlurDeploy />
+
+        {/* Tech Stack Arsenal & Categorized Matrix */}
+        <BagianKeahlian daftarKeahlian={daftarKeahlian} />
       </main>
+
+      {/* BAB 05: Let's Connect — Footer Interaktif */}
+      <FooterPublik
+        namaLengkap={dataBiodata.nama_lengkap}
+        emailKontak={dataBiodata.email_kontak}
+      />
     </div>
   );
 }

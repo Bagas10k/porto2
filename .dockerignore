@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.agents
+.agent
+.gemini
+dev.db
+dev.db-journal
+*.log
+npm-debug.log*
+.env.local
+.env*.local

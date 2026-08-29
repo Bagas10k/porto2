@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Estimasi Biaya Pembuatan Website & Aplikasi</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wadah-utama">
+    <header class="kepala-halaman">
+      <div class="lencana">SIMULATOR ESTIMASI PROYEK</div>
+      <h1>Hitung Estimasi Biaya Pembuatan Web & Otomasi AI</h1>
+      <p>Simulasikan kebutuhan aplikasimu dan dapatkan perkiraan waktu pengerjaan secara transparan.</p>
+    </header>
+
+    <main class="kartu-kalkulator">
+      <!-- Jenis Proyek -->
+      <section class="grup-pilihan">
+        <label class="label-grup">1. Pilih Jenis Proyek Utama</label>
+        <div class="grid-pilihan">
+          <button type="button" class="tombol-tipe aktif" data-tipe="landing" data-harga="3500000" data-hari="4">
+            <span class="tipe-nama">Pro Landing Page</span>
+            <span class="tipe-ket">Desain premium, animasi modern, 100% responsif HP.</span>
+          </button>
+          <button type="button" class="tombol-tipe" data-tipe="webapp" data-harga="8500000" data-hari="10">
+            <span class="tipe-nama">Aplikasi Web & Dashboard</span>
+            <span class="tipe-ket">Sistem kasir/admin, database SQLite/Postgres, manajemen data.</span>
+          </button>
+          <button type="button" class="tombol-tipe" data-tipe="ai" data-harga="12000000" data-hari="14">
+            <span class="tipe-nama">Sistem Otomasi & AI Bot</span>
+            <span class="tipe-ket">Asisten WhatsApp 24 jam, rekap penjualan otomatis, AI agent.</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Fitur Tambahan -->
+      <section class="grup-pilihan">
+        <label class="label-grup">2. Fitur Tambahan (Opsional)</label>
+        <div class="daftar-checkbox">
+          <label class="item-ceklis">
+            <input type="checkbox" class="fitur-tambahan" data-harga="1500000" data-hari="2" checked>
+            <span class="kotak-ceklis"></span>
+            <div class="info-fitur">
+              <span class="nama-fitur">Integrasi Payment Gateway (QRIS, VA, Kartu)</span>
+              <span class="harga-fitur">+ Rp 1.500.000 (2 Hari)</span>
+            </div>
+          </label>
+          <label class="item-ceklis">
+            <input type="checkbox" class="fitur-tambahan" data-harga="2000000" data-hari="3">
+            <span class="kotak-ceklis"></span>
+            <div class="info-fitur">
+              <span class="nama-fitur">Sistem Notifikasi WhatsApp / Email Otomatis</span>
+              <span class="harga-fitur">+ Rp 2.000.000 (3 Hari)</span>
+            </div>
+          </label>
+          <label class="item-ceklis">
+            <input type="checkbox" class="fitur-tambahan" data-harga="1200000" data-hari="1" checked>
+            <span class="kotak-ceklis"></span>
+            <div class="info-fitur">
+              <span class="nama-fitur">SEO Pro & Kecepatan Akses Kilat (Grade A)</span>
+              <span class="harga-fitur">+ Rp 1.200.000 (1 Hari)</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Ringkasan Hasil Kalkulasi -->
+      <div class="panel-ringkasan">
+        <div class="item-ringkasan">
+          <span class="label-ringkasan">Estimasi Waktu Pengerjaan:</span>
+          <span class="nilai-ringkasan" id="nilai-waktu">7 Hari Kerja</span>
+        </div>
+        <div class="item-ringkasan total">
+          <span class="label-ringkasan">Total Estimasi Investasi:</span>
+          <span class="nilai-ringkasan harga" id="nilai-harga">Rp 6.200.000</span>
+        </div>
+
+        <a id="tombol-konsultasi" href="#" target="_blank" class="tombol-aksi-wa">
+          <span>Konsultasikan Proyek Ini via WhatsApp</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </main>
+
+    <footer class="kaki-halaman">
+      <p>Ditenagai oleh Micro-Deployment Engine · Portofolio Bagas Pratama</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
