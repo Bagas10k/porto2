@@ -2,6 +2,7 @@
 
 ## Ringkasan Proyek
 - **Nama Proyek**: Personal Digital Hub & Static Micro-Deployment Engine (Creative Technologist & Generative Coding Edition)
+- **Repositori GitHub**: [https://github.com/Bagas10k/porto2.git](https://github.com/Bagas10k/porto2.git) (Branch: `main`)
 - **Stack**: Next.js 15 (App Router), Tailwind CSS v4, Framer Motion, Prisma ORM, SQLite
 - **Fitur Lengkap**:
   1. Halaman Beranda 6 Bab (Fokus Solusi Bisnis & Hasil Karya Nyata)
@@ -16,7 +17,8 @@
 
 ---
 
-## Status Pengujian Empiris
+## Status Pengujian & Git Remote
+- **GitHub Remote**: Berhasil diunggah ke `origin/main` (`https://github.com/Bagas10k/porto2.git`).
 - **TypeScript**: `0 error` lolos bersih (`npx tsc --noEmit`).
 - **Respon Server**: `HTTP 200 OK` di seluruh rute publik dan subpath static serving.
 - **Pesan Masuk**: Berhasil diuji coba submit dan tersimpan di database.

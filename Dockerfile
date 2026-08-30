@@ -28,9 +28,10 @@ ENV HOSTNAME="0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Salin aset publik, prisma, skrip entrypoint, dan output standalone
+# Salin aset publik, prisma, node_modules, skrip entrypoint, dan output standalone
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/docker-entrypoint.sh ./docker-entrypoint.sh
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static

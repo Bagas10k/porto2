@@ -59,10 +59,10 @@ export async function POST(req: NextRequest) {
       },
       pesan: hasilEkstraksi.pesan,
     });
-  } catch (galat) {
+  } catch (galat: any) {
     console.error("Galat pada API Unggah ZIP Proyek:", galat);
     return NextResponse.json(
-      { sukses: false, pesan: "Terjadi kesalahan internal saat memproses berkas ZIP." },
+      { sukses: false, pesan: galat?.message || "Terjadi kesalahan internal saat memproses berkas ZIP." },
       { status: 500 }
     );
   }

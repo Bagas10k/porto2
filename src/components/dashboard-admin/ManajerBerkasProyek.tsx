@@ -164,26 +164,39 @@ export function ManajerBerkasProyek({
       setProgresUpload(80);
       setPesanStatusUpload("Mengekstrak ke server & mendaftarkan URL...");
 
-      const data = await res.json();
+      let data: any;
+      try {
+        data = await res.json();
+      } catch {
+        data = { sukses: false, pesan: `Gagal memproses respons server (HTTP ${res.status}).` };
+      }
 
-      if (data.sukses) {
-        // Buat record proyek di database
-        await fetch("/api/proyek", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            judul: judulCepat,
-            slug: slugOtomatis,
-            deskripsi: `Aplikasi web ${judulCepat} yang diunggah dan dideploy secara instan.`,
-            kategori: kategoriCepat,
-            tipe_media: "WEB_DEPLOYMENT",
-            tautan_tujuan: data.data?.url_tujuan || data.jalurAksesPublik || `/projects/${slugOtomatis}/index.html`,
-            path_statis: `projects/${slugOtomatis}`,
-            status: "AKTIF",
-            daftar_tag: JSON.stringify(["Web App", "Live"]),
-          }),
-        });
+      if (!res.ok || !data.sukses) {
+        setPesanGalatUpload(data.pesan || `Gagal mengunggah file (Status HTTP ${res.status}).`);
+        setSedangUploadCepat(false);
+        return;
+      }
 
+      // Buat record proyek di database
+      const resProyek = await fetch("/api/proyek", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          judul: judulCepat,
+          slug: slugOtomatis,
+          deskripsi: `Aplikasi web ${judulCepat} yang diunggah dan dideploy secara instan.`,
+          kategori: kategoriCepat,
+          tipe_media: "WEB_DEPLOYMENT",
+          tautan_tujuan: data.data?.url_tujuan || data.jalurAksesPublik || `/projects/${slugOtomatis}/index.html`,
+          path_statis: `projects/${slugOtomatis}`,
+          status: "AKTIF",
+          daftar_tag: JSON.stringify(["Web App", "Live"]),
+        }),
+      });
+
+      const dataProyek = await resProyek.json().catch(() => ({ sukses: true }));
+
+      if (resProyek.ok && dataProyek.sukses !== false) {
         setProgresUpload(100);
         setPesanStatusUpload("Website berhasil online! URL aktif seketika.");
         setTimeout(() => {
@@ -195,11 +208,12 @@ export function ManajerBerkasProyek({
           onMuatUlang();
         }, 1500);
       } else {
-        setPesanGalatUpload(data.pesan || "Gagal mengunggah file.");
+        setPesanGalatUpload(dataProyek.pesan || "Berkas terekstrak, namun gagal menyimpan informasi ke basis data.");
         setSedangUploadCepat(false);
       }
-    } catch {
-      setPesanGalatUpload("Terjadi kendala jaringan saat mengunggah.");
+    } catch (galat: any) {
+      console.error("Galat saat upload cepat:", galat);
+      setPesanGalatUpload(galat?.message || "Terjadi kendala jaringan saat mengunggah.");
       setSedangUploadCepat(false);
     }
   }
