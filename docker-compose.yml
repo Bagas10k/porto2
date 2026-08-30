@@ -6,7 +6,7 @@ services:
     container_name: portofolio_bagas_app
     restart: always
     ports:
-      - "3000:3000"
+      - "${PORT_HOST:-3005}:3000"
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/dev.db
