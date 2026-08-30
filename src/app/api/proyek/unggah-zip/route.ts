@@ -53,6 +53,10 @@ export async function POST(req: NextRequest) {
       sukses: true,
       slug: slugBersih,
       jalurAksesPublik: hasilEkstraksi.jalurAksesPublik,
+      data: {
+        slug: slugBersih,
+        url_tujuan: hasilEkstraksi.jalurAksesPublik,
+      },
       pesan: hasilEkstraksi.pesan,
     });
   } catch (galat) {
