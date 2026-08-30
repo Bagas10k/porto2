@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Portofolio Personal & Static Micro-Deployment Engine
 
-## Getting Started
+Platform portofolio personal kelas enterprise untuk **Bagas Pratama** (*Senior Fullstack Engineer & Creative Technologist*) yang dilengkapi dengan mesin **Static Micro-Deployment Otomatis** (unggah file `.zip` langsung aktif menjadi website live di subpath `/projects/[nama-proyek]/`).
 
-First, run the development server:
+---
+
+## ✨ Fitur Utama
+
+- **Tipografi 100% Solid & Bebas Gradasi**: Kontras tinggi sesuai standar WCAG AA dengan pendaran aksen modern.
+- **Interaksi Fisika Pegas 60 FPS**: Kursor magnetik ganda (*dual spring*) dan tombol hover magnetik berbasis `context7` & `framer-motion`.
+- **Formulir Kontak Cepat & Inbox Admin**: Pengunjung dapat langsung mengirim pesan dari beranda yang tersimpan di basis data dan dapat dibalas dari dashboard admin.
+- **Mesin Micro-Deployment Statis**: Unggah berkas ZIP (React SPA, HTML/CSS/JS, atau Mini Apps), ekstrak otomatis dengan proteksi Zip-Slip, dan sajikan subpath serving secara instan.
+- **Dashboard Admin Lengkap**:
+  - `/admin/proyek`: Manajer berkas, telemetri kapasitas storage, dan drag & drop uploader.
+  - `/admin/pesan`: Manajemen inbox pesan masuk dan tombol balas via email.
+  - `/admin/pengaturan`: Pengaturan profil biodata, tautan sosial, dan kata sandi admin.
+  - `/admin/panduan-server`: Panduan lengkap perintah server Linux.
+- **Siap Deployment Produksi**: Dibungkus dengan `Dockerfile` standalone, `docker-compose.yml`, `nginx.conf`, dan dukungan penuh **Cloudflare Tunnel**.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 (App Router, Standalone Mode)
+- **Styling**: Tailwind CSS v4
+- **Animasi**: Framer Motion (Physics Spring, AnimatePresence)
+- **Basis Data & ORM**: Prisma ORM (SQLite / PostgreSQL)
+- **Ikon**: Lucide Icons
+- **Deployment**: Docker Compose, Cloudflare Tunnel, Nginx Reverse Proxy
+
+---
+
+## 📖 Panduan Instalasi & Setup Server
+
+Untuk panduan lengkap langkah demi langkah memasang website ini di **Ubuntu Server (VPS)** dan menghubungkannya ke **Cloudflare Tunnel**, silakan baca dokumen resmi berikut:
+
+👉 [**PANDUAN_SETUP_SERVER_DAN_TUNNEL.md**](./PANDUAN_SETUP_SERVER_DAN_TUNNEL.md)
+
+---
+
+## 💻 Menjalankan di Komputer Lokal
 
 ```bash
+# 1. Install dependensi
+npm install
+
+# 2. Sinkronisasi database Prisma
+npx prisma db push
+
+# 3. Jalankan server pengembangan
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Buka [http://localhost:3000](http://localhost:3000) di browsermu.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 Lisensi
+Hak Cipta © 2026 Bagas Pratama. Dilindungi undang-undang.
