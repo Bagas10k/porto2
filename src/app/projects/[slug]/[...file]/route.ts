@@ -59,6 +59,27 @@ export async function GET(
     const ekstensi = path.extname(jalurBerkas).toLowerCase();
     const tipeKonten = TIPE_MIME[ekstensi] || "application/octet-stream";
 
+    if (ekstensi === ".html") {
+      let kontenHtml = await fs.readFile(jalurBerkas, "utf-8");
+      if (!kontenHtml.includes("<base ") && !kontenHtml.includes("<BASE ")) {
+        if (kontenHtml.includes("<head>")) {
+          kontenHtml = kontenHtml.replace("<head>", `<head>\n  <base href="/projects/${slug}/">`);
+        } else if (kontenHtml.includes("<HEAD>")) {
+          kontenHtml = kontenHtml.replace("<HEAD>", `<HEAD>\n  <base href="/projects/${slug}/">`);
+        }
+      }
+      kontenHtml = kontenHtml.replace(
+        /(href|src)=["']\/(?!\/|projects\/|api\/|_next\/|data:)([^"']+)["']/gi,
+        `$1="/projects/${slug}/$2"`
+      );
+      return new NextResponse(kontenHtml, {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-cache",
+        },
+      });
+    }
+
     const konten = await fs.readFile(jalurBerkas);
     return new NextResponse(konten, {
       headers: {

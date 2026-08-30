@@ -12,6 +12,13 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
+    
+    // Pastikan URL memiliki trailing slash agar relative assets ter-resolve dengan benar
+    const pathname = req.nextUrl.pathname;
+    if (!pathname.endsWith("/")) {
+      return NextResponse.redirect(new URL(`${pathname}/`, req.url), 308);
+    }
+
     const jalurBerkas = path.join(DIREKTORI_PROYEK_STATIS, slug, "index.html");
 
     if (!fsSync.existsSync(jalurBerkas)) {
@@ -20,7 +27,25 @@ export async function GET(
       });
     }
 
-    const konten = await fs.readFile(jalurBerkas);
+    let konten = await fs.readFile(jalurBerkas, "utf-8");
+
+    // 1. Sisipkan tag <base> jika belum ada agar semua relative link CSS/JS/Image ter-resolve ke subpath
+    if (!konten.includes("<base ") && !konten.includes("<BASE ")) {
+      if (konten.includes("<head>")) {
+        konten = konten.replace("<head>", `<head>\n  <base href="/projects/${slug}/">`);
+      } else if (konten.includes("<HEAD>")) {
+        konten = konten.replace("<HEAD>", `<HEAD>\n  <base href="/projects/${slug}/">`);
+      } else if (/<html[^>]*>/i.test(konten)) {
+        konten = konten.replace(/<html[^>]*>/i, `$&\n<head><base href="/projects/${slug}/"></head>`);
+      }
+    }
+
+    // 2. Rewrite root-relative asset paths (seperti href="/style.css" atau src="/app.js")
+    konten = konten.replace(
+      /(href|src)=["']\/(?!\/|projects\/|api\/|_next\/|data:)([^"']+)["']/gi,
+      `$1="/projects/${slug}/$2"`
+    );
+
     return new NextResponse(konten, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
